@@ -5,20 +5,20 @@
         <div class="col-12">
             <div class="card-body">
                 <form method="post" action="{{ route('manager::news:edit.post') }}">
-                    <input type="hidden" name="news_id" value="{{!empty($news) ? $news->id : ''}}"/>
+                    <input type="hidden" name="form[row][id]" value="{{!empty($news) ? $news->id : ''}}"/>
                     <div class="form-group row">
                         <label for="category_id" class="col-md-12 col-form-label">{{ __('Category') }}:</label>
 
                         <div class="col-md-12">
-                            <select name="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
+                            <select name="form[model][category_id]" class="form-control{{ $errors->has('form.model.category_id') ? ' is-invalid' : '' }}">
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option {{ (!empty($news) && $category->id == $news->category_id ) ? "selected" : "" }} value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
 
-                            @if ($errors->has('category_id'))
+                            @if ($errors->has('form.category_id'))
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('category_id') }}</strong>
+                                        <strong>{{ $errors->first('form.model.category_id') }}</strong>
                                     </span>
                             @endif
                         </div>
@@ -27,13 +27,13 @@
                         <label for="title" class="col-md-12 col-form-label">{{ __('Title') }}:</label>
 
                         <div class="col-md-12">
-                            <input id="title" type="title"
-                                   class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title"
-                                   value="{{ old('title') ? : (!empty($news) ? $news->title : '')}}" required autofocus>
+                            <input id="title" type="text"
+                                   class="form-control{{ $errors->has('form.model.title') ? ' is-invalid' : '' }}" name="form[model][title]"
+                                   value="{{ old('form.title') ? : (!empty($news) ? $news->title : '')}}" required autofocus>
 
-                            @if ($errors->has('title'))
+                            @if ($errors->has('form.model.title'))
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('form.model.title') }}</strong>
                                     </span>
                             @endif
                         </div>
@@ -42,11 +42,11 @@
                         <label for="title" class="col-md-12 col-form-label">{{ __('Content') }}:</label>
 
                         <div class="col-md-12">
-                            <textarea class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" name="content">{{!empty($news) ? $news->content : ''}}</textarea>
+                            <textarea class="form-control{{ $errors->has('form.model.content') ? ' is-invalid' : '' }}" name="form[model][content]">{{ old('form.model.content') ? : (!empty($news) ? $news->content : '')}}</textarea>
 
-                            @if ($errors->has('content'))
+                            @if ($errors->has('form.model.content'))
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('content') }}</strong>
+                                        <strong>{{ $errors->first('form.model.content') }}</strong>
                                     </span>
                             @endif
                         </div>

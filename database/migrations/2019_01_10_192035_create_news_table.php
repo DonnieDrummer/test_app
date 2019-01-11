@@ -18,7 +18,7 @@ class CreateNewsTable extends Migration
             $table->unsignedInteger('category_id');
             $table->foreign('category_id')->references('id')->on('news_categories')->onDelete('cascade');
             $table->timestamps();
-            $table->timestamp('published_at');
+            $table->timestamp('published_at')->nullable();
             $table->softDeletes();
 
             $table->string('title');

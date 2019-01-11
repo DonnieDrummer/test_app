@@ -8,22 +8,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\NewsCategoryRepository;
 use App\Repositories\NewsRepository;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    protected $categories;
     public function __construct()
     {
         $this->repository = new NewsRepository();
+        $this->categories = new NewsCategoryRepository();
     }
 
-    public function indexAction($categoryId = null, Request $request)
+    public function indexAction(Request $request, $categoryId = null)
     {
-        return view('frontend.news.index');
+        $categories = $this->categories->get();
+        $news = $this->repository->whereCategory($categoryId)->get();
+        
+        return view('frontend.news.index', compact('news', 'categories'));
     }
     
-    public function viewAction($id, Request $request)
+    public function viewAction(Request $request, $id)
     {
         
     }

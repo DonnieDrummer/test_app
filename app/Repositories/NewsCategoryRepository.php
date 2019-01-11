@@ -38,14 +38,9 @@ class NewsCategoryRepository implements Repository
         return $this->model->with($relations);
     }
 
-    public function create(array $data = [])
+    public function store(array $data = [])
     {
         // TODO: Implement create() method.
-    }
-
-    public function update($id, array $data = [])
-    {
-        // TODO: Implement update() method.
     }
 
     public function delete($id)

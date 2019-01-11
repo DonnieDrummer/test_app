@@ -9,9 +9,9 @@
 include_once "auth.php";
 
 Route::namespace('Backend')->group(function () {
-    Route::group(['prefix' => 'manager', 'as' => 'manager::'], function () {
+    Route::group(['prefix' => 'manager', 'as' => 'manager::', 'middleware' => 'auth'], function () {
         Route::get('/', ['as' => 'index.get', 'uses' => 'NewsController@indexAction']);
-        
+
         include_once "news.php";
     });
 });

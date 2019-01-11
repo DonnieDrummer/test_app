@@ -9,4 +9,5 @@
 Route::group(['prefix' => 'news', 'as' => 'news:'], function() {
     Route::get('/edit/{id?}', ['as' => 'edit.get', 'uses' => 'NewsController@editAction']);
     Route::post('/edit/{id?}', ['as' => 'edit.post', 'uses' => 'NewsController@storeAction']);
+    Route::post('/delete/{id}', ['as' => 'delete.post', 'uses' => 'NewsController@deleteAction']);
 });

@@ -28,12 +28,12 @@ class NewsRepository implements Repository
 
     public function get($limit = 10, $offset = 0)
     {
-        // TODO: Implement get() method.
+        return $this->model->limit($limit)->offset($offset)->get();
     }
 
     public function getById($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->find($id);
     }
 
     public function with(array $relations = [])
@@ -41,18 +41,28 @@ class NewsRepository implements Repository
         return $this->model->with($relations);
     }
 
-    public function create(array $data = [])
+    public function store(array $data = [])
     {
-        // TODO: Implement create() method.
-    }
+        if (!empty($data['row']['id'])) {
+            $this->model = $this->model->find($data['row']['id']);
+        }
 
-    public function update($id, array $data = [])
-    {
-        // TODO: Implement update() method.
+        foreach ($data['model'] as $prop => $value) {
+            $this->model->{$prop} = $value;
+        }
+
+        $this->model->save();
+
+        return $this->model;
     }
 
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        $this->model->destroy($id);
+    }
+
+    public function whereCategory($filedValue = null)
+    {
+        return ($filedValue) ? $this->model->where('category_id', $filedValue) : $this->model;
     }
 }

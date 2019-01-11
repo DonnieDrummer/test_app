@@ -14,6 +14,10 @@ class News extends Eloquent
 {
     protected $table = 'news';
 
+    protected $fillable = [
+        'category_id', 'title', 'content', 'published_at'
+    ];
+
     public function category()
     {
         return $this->hasOne(NewsCategory::class, 'id', 'category_id');
